@@ -1,5 +1,5 @@
 # boosting up my shell 
-* This is boosing up shell on MACOS
+* This is boosing up shell on MacOS
 * You can using on Linux. But have to modify a little
 
 ## requirements
@@ -18,6 +18,10 @@ brew install tmux-cssh
 * [kubectl]()
 ```
 brew install kubernetes-cli
+```
+* [stern](https://github.com/wercker/stern) - kubernetes multiple pod tail
+```
+brew install stern
 ```
 
 ## detail
