@@ -70,8 +70,6 @@ fi
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
-set -o vi
-
 # alias
 alias ls='ls -GFhl'
 alias ll='ls -GFhla'
@@ -79,3 +77,6 @@ alias kc='$(which kubectl) $@'
 
 # vi style
 set -o vi
+
+# history ignore
+export HISTIGNORE="pwd:ls:cd"
