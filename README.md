@@ -23,6 +23,9 @@ brew install kubernetes-cli
 ```
 brew install stern
 ```
+* [fzf](https://github.com/junegunn/fzf.git) 
+* [autoenv](https://github.com/kennethreitz/autoenv.git)
+* [kubemgr](https://github.com/leoh0/kubemgr.git)
 
 ## detail
 * bash - customize for bash configuration(.bash_profile)

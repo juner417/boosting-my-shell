@@ -15,5 +15,5 @@ syntax on      "turn on syntax highlighting
 au BufNewFile,BufRead Jenkinsfile* setf groovy "for Jenkins files
 
 "--- vim colorscheme ---"
-"colorscheme desert     "colorscheme
+colorscheme desert     "colorscheme
 
