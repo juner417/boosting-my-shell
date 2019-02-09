@@ -11,6 +11,11 @@ man() {
             man "$@"
 }
 
+# bash completion ```brew install bash-completion``` 
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+    . $(brew --prefix)/etc/bash_completion
+fi
+
 # for __git_ps1
 if [ -d $(brew --prefix)/etc/bash_completion.d ]; then
     source $(brew --prefix)/etc/bash_completion.d/git-completion.bash
@@ -40,33 +45,8 @@ PS1='$(__stat)'
 # import kubectl completion bash
 source <(kubectl completion bash)
 
-# function for k8s
-ks() {
-  context=$(kubectl config view -o go-template='{{range .contexts}}{{- printf "%s\n" .name -}}{{end}}' | fzf -x -m -e +s --reverse --bind=left:page-up,right:page-down --no-mouse)
-  kubectl config use-context $context
-}
 
-kps() {
-  kubectl get pod --all-namespaces | fzf -x -m -e +s --reverse --bind=left:page-up,right:page-down --no-mouse
-}
-
-klog() {
-  kubectl logs $2 -n $1 -f
-}
-
-function __kubernetes() {
-  echo -en "$(kubectl config current-context)"
-}
-
-GIT_PS1_SHOWDIRTYSTATE=true
-if [[ "${OUT}" == "" ]]; then
-  PS1='$(__stat):\[\033[01;34m\]\w\[\033[00m\]\[\033[01;35m\]$(__git_ps1)\[\033[00m\] \[\033[01;33m\]$(__kubernetes)\[\033[00m\]
-\$ '
-else
-  PS1='$(__stat):\[\033[01;34m\]\w\[\033[00m\]\[\033[01;35m\]$(__git_ps1)\[\033[00m\]
-\$ '
-fi
-
+# pyenv
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
