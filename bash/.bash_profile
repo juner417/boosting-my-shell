@@ -45,6 +45,11 @@ PS1='$(__stat)'
 # import kubectl completion bash
 source <(kubectl completion bash)
 
+# for kubernetes 
+ks() {
+  context=$(kubectl config view -o go-template='{{range .contexts}}{{- printf "%s\n" .name -}}{{end}}' | fzf -x -m -e +s --reverse --bind=left:page-up,right:page-down --no-mouse)
+  kubectl config use-context $context
+}
 
 # pyenv
 eval "$(pyenv init -)"
@@ -54,9 +59,15 @@ eval "$(pyenv virtualenv-init -)"
 alias ls='ls -GFhl'
 alias ll='ls -GFhla'
 alias kc='$(which kubectl) $@'
+alias klog='$(which stern) $@'
+alias g='git'
+alias tg='tig'
 
 # vi style
 set -o vi
 
 # history ignore
 export HISTIGNORE="pwd:ls:cd"
+# to using bash5.0
+export SHELL=/usr/local/bin/bash
+
