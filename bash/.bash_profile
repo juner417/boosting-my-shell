@@ -1,4 +1,4 @@
-# Highlight man page 
+# Highlight man page
 man() {
     env \
         LESS_TERMCAP_mb=$(printf "\e[1;31m") \
@@ -11,9 +11,9 @@ man() {
             man "$@"
 }
 
-# bash completion ```brew install bash-completion``` 
+# bash completion ```brew install bash-completion```
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
-    . $(brew --prefix)/etc/bash_completion
+    source $(brew --prefix)/etc/bash_completion
 fi
 
 # for __git_ps1
@@ -42,14 +42,35 @@ function __stat() {
 }
 PS1='$(__stat)'
 
-# import kubectl completion bash
-source <(kubectl completion bash)
-
-# for kubernetes 
+# for kubernetes
 ks() {
   context=$(kubectl config view -o go-template='{{range .contexts}}{{- printf "%s\n" .name -}}{{end}}' | fzf -x -m -e +s --reverse --bind=left:page-up,right:page-down --no-mouse)
   kubectl config use-context $context
 }
+
+# history ignore
+export HISTCONTROL=ignoredups:erasedups
+export HISTIGNORE="pwd:ls:cd"
+export HISTSIZE=100000
+export HISTFILESIZE=100000
+PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; history -c; history -r"
+
+# fzf
+# Setup fzf
+# ---------
+if [[ ! "$PATH" == */usr/local/opt/fzf/bin* ]]; then
+  export PATH="${PATH:+${PATH}:}/usr/local/opt/fzf/bin"
+fi
+
+# Auto-completion
+# ---------------
+[[ $- == *i* ]] && source "/usr/local/opt/fzf/shell/completion.bash" 2> /dev/null
+
+# Key bindings
+# ------------
+source "/usr/local/opt/fzf/shell/key-bindings.bash"
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 # pyenv
 eval "$(pyenv init -)"
@@ -58,16 +79,18 @@ eval "$(pyenv virtualenv-init -)"
 # alias
 alias ls='ls -GFhl'
 alias ll='ls -GFhla'
-alias kc='$(which kubectl) $@'
+alias k='$(which kubectl) $@'
 alias klog='$(which stern) $@'
 alias g='git'
 alias tg='tig'
+alias cssh='tmux-cssh -c $@'
+
+# import kubectl completion bash
+source <(kubectl completion bash)
+complete -o bashdefault -o default -o dirnames -F __start_kubectl k
 
 # vi style
 set -o vi
 
-# history ignore
-export HISTIGNORE="pwd:ls:cd"
 # to using bash5.0
 export SHELL=/usr/local/bin/bash
-
