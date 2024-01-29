@@ -23,7 +23,7 @@ gpg: next trustdb check due at 2027-01-23
 ---------
 sec   ed25519 2024-01-24 [SC] [expires: 2027-01-23]
       <YOURE_GPG_PUB_KEY_FINGERPRINT>
-uid           [ultimate] juner417 <juner417@linecorp.com>
+uid           [ultimate] juner417 <juner84s@gmail.com>
 ssb   cv25519 2024-01-24 [E] [expires: 2027-01-23]
 ```
 
